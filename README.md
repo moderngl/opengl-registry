@@ -1,7 +1,7 @@
 
 # opengl-api-registry-reader
 
-A simple too for extracting information from the OpenGL API Registry.
+A simple tool for extracting information from the OpenGL API Registry.
 
 INSERT MORE DETAILS HERE
 
