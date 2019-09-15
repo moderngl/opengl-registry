@@ -1,16 +1,13 @@
 
 # opengl-api-registry-reader
 
-A simple tool for extracting information from the OpenGL API Registry.
+**NOTE: The repository is currently a work-in-progress. This warning
+will be removed once the first version is releated on PyPI**
 
-INSERT MORE DETAILS HERE
+A simple tool for extracting information from the OpenGL API Registry.
 
 The registry is currently located on github in the KhronosGroup organization:
 https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml
-
-## Usage
-
-Some example using command line and the api.
 
 ## Running Tests
 
