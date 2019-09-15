@@ -15,6 +15,21 @@ DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/ma
 class RegistryReader:
     """Reads ``gl.xml`` file into a ``Registry`` structure
     that can easily be inspected.
+
+    The reader instantiates data objects for every tag in the xml
+    file. The created ``Registry`` is then responsible for making
+    sense of the information.
+
+    Example::
+
+        # From a local file
+        reader = RegistryReader.from_file('gl.xml')
+        registry = reader.read()
+
+        # From url. If no url paramter is passed in the last known url for this file is used.
+        # Currently it resides on github in the KhronosGroup organization
+        reader = RegistryReader.from_url()
+        registry = reader.read()
     """
     #: The registry class. Can be replaced with a custom class
     registry_cls = Registry
@@ -24,6 +39,14 @@ class RegistryReader:
     enum_cls = Enum
 
     def __init__(self, tree: ElementTree):
+        """Initialize the reader.
+
+        Currently we use `xml.etree.ElementTree` for parsing the
+        registry information.
+
+        Args:
+            tree (ElementTree): The `ElementTree` instance
+        """
         self._tree = tree
         self._registry = self.registry_cls()
         # Parser data

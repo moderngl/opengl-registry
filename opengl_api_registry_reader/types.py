@@ -8,7 +8,7 @@ class Type:
                  comment: str = None, requires: str = None):
         """Initialize a GL type.
 
-        Args:
+        Keyword Args:
             name (str): Name of the type
             text (str): text data
             comment (str): Type comment
@@ -49,7 +49,7 @@ class Type:
 class Group:
     """Grouped enums"""
 
-    def __init__(self, name: str, entries: Set[str] = None):
+    def __init__(self, name: str, entries: Set[str]):
         """Initialize a group.
 
         Args:
@@ -63,7 +63,7 @@ class Group:
     def name(self) -> str:
         """str: group name"""
         return self._name
-    
+
     @property
     def entires(self) -> Set[str]:
         """Set[str]: All enum entires in the group"""
@@ -85,7 +85,7 @@ class Enums:
         
         This represents a reserved enum range normally reserved for a specific vendor.
 
-        Args:
+        Keyword Args:
             namespace (str): Namespace for the range (Usually always ``GL``)
             start (str): Range start as a hex string
             end (str): Range end as a hex string
@@ -154,12 +154,13 @@ class Enums:
 class Enum:
     """Container for GL enum info"""
 
-    def __init__(self, name:str, value: str, comment=None):
+    def __init__(self, name: str, value: str, comment=None):
         """Initialize an enum instance.
 
         Args:
             name (str): Name of the enum
             value (str): Enum value (hex number as string)
+        Keyword Args:
             comment (str): Enum comment
         """
         self._name = name
@@ -209,22 +210,24 @@ class Registry:
     def __init__(self, types: List[Type] = None, groups: List[Group] = None):
         """Initialize the registry.
 
-        Args:
-            types: 
-            groups: 
+        Keyword Args:
+            types (List[Type]): List of types
+            groups (List[Group]): List of groups
         """
         self._groups = {grp.name: grp for grp in groups} if groups else dict()
         self._types = types
 
     @property
     def groups(self) -> dict:
+        """dict: Dictionary for all groups with group name as key"""
         return self._groups
 
     @property
     def types(self) -> List[Type]:
+        """List[Type]: List of all types"""
         return self._types
 
     # TODO: Finalize this method
-    def get_features(api='gl', profile='core', version='3.3', extensions=None):
+    def get_features(api: str = 'gl', profile: str = 'core', version: str = '3.3', extensions=None):
         """Generate a subset of the registry"""
         raise NotImplementedError()
