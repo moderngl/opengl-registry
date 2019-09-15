@@ -2,10 +2,37 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name="opengl-api-registry-reader",
+    version="0.1.0",
+    description="A simple tool for extracting information from the OpenGL API Registry",
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url="https://github.com/moderngl/opengl-api-registry-reader",
     author="Einar Forselv",
     author_email="eforselv@gmail.com",
-    description="A simple tool for extracting information from the OpenGL API Registry",
+    python_requires='>=3.5',
+    platforms=['any'],
+    license='MIT',
+    packages=find_namespace_packages(include=['opengl_api_registry_reader']),
     install_requires=[
         'requests<3',
     ],
+    project_urls={
+        'Documentation': 'https://opengl-api-registry-reader.readthedocs.io',
+        'OpenGL-Registry': 'https://github.com/KhronosGroup/OpenGL-Registry',
+    },
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Topic :: Multimedia :: Graphics',
+        'Topic :: Multimedia :: Graphics :: 3D Rendering',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+    ],
+    entry_points={
+        'console_scripts': [
+            'opengl-registry = opengl_api_registry_reader.cli:execute_from_command_line',
+        ],
+    },
 )
