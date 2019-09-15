@@ -12,6 +12,13 @@ https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml
 
 Some example using command line and the api.
 
+## Building Docs
+
+```sh
+pip install -r docs/requirements.txt
+python setup.py build_sphinx
+```
+
 ## Registry Info Details
 
 The registry is simply a huge xml file containing information about enums
