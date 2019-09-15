@@ -153,7 +153,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'opengl-api-registry-reader', 'opengl-api-registry-reader Documentation',
-     author, 'opengl-api-registry-reader', 'One line description of project.',
+     author, 'opengl-api-registry-reader', 'A simple tool for extracting information from the OpenGL API Registry .',
      'Miscellaneous'),
 ]
 
