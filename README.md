@@ -12,6 +12,22 @@ https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml
 
 Some example using command line and the api.
 
+## Running Tests
+
+We use `tox` for running tests covering py3.4, py3.6 and py3.7 with flake9 and coverage.
+
+```sh
+pip install -r tests/requirements.txt
+# All enviroments
+tox
+
+# Specific enviroments
+tox -e py35
+tox -e py36
+tox -e py37
+tox -e pep8
+```
+
 ## Building Docs
 
 ```sh
