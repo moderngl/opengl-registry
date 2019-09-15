@@ -1,6 +1,6 @@
 import os
 from unittest import TestCase
-from opengl_api_registry_reader import RegistryReader
+from opengl_registry import RegistryReader
 
 
 class ParserTestCase(TestCase):

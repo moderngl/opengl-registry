@@ -5,13 +5,13 @@ from xml.etree import ElementTree
 import requests
 
 # NOTE: Consider moving this to __init__ when finalized
-from opengl_api_registry_reader.registry import Registry
-from opengl_api_registry_reader.gltype import GlType
-from opengl_api_registry_reader.enums import Enums, Enum
-from opengl_api_registry_reader.group import Group
-from opengl_api_registry_reader.commands import Command
-from opengl_api_registry_reader.features import Feature
-from opengl_api_registry_reader.extensions import Extension
+from opengl_registry.registry import Registry
+from opengl_registry.gltype import GlType
+from opengl_registry.enums import Enums, Enum
+from opengl_registry.group import Group
+from opengl_registry.commands import Command
+from opengl_registry.features import Feature
+from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
 

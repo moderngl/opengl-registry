@@ -1,5 +1,5 @@
 
-# opengl-api-registry-reader
+# opengl-registry
 
 **NOTE: The repository is currently a work-in-progress. This warning
 will be removed once the first version is releated on PyPI**

@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 
-from opengl_api_registry_reader.reader import RegistryReader
+from opengl_registry.reader import RegistryReader
 
 
 def execute_from_command_line():
@@ -67,7 +67,7 @@ def parse_args(args: List[str]):
 
 
 def configure_logging(level):
-    pkg_logger = logging.getLogger('opengl_api_registry_reader')
+    pkg_logger = logging.getLogger('opengl_registry')
     pkg_logger.setLevel(level)
     ch = logging.StreamHandler()
     ch.setLevel(level)

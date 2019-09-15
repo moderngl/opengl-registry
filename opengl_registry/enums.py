@@ -1,4 +1,4 @@
-from opengl_api_registry_reader.group import Group
+from opengl_registry.group import Group
 
 
 class Enums:

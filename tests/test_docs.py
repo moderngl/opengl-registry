@@ -56,7 +56,7 @@ class DocTestCase(unittest.TestCase):
     def test_opengl_registry_reader(self):
         self.validate(
             'reader.rst',
-            'opengl_api_registry_reader.reader',
+            'opengl_registry.reader',
             classname='RegistryReader',
             ignore=[],
         )

@@ -1,5 +1,5 @@
 
-.. py:module:: opengl_api_registry_reader.reader
+.. py:module:: opengl_registry.reader
 
 RegistryReader
 ==============

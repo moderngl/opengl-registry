@@ -1,7 +1,7 @@
 from setuptools import setup, find_namespace_packages
 
 setup(
-    name="opengl-api-registry-reader",
+    name="opengl-registry",
     version="0.1.0",
     description="A simple tool for extracting information from the OpenGL API Registry",
     long_description=open('README.md').read(),
@@ -12,7 +12,7 @@ setup(
     python_requires='>=3.5',
     platforms=['any'],
     license='MIT',
-    packages=find_namespace_packages(include=['opengl_api_registry_reader']),
+    packages=find_namespace_packages(include=['opengl_registry']),
     install_requires=[
         'requests<3',
     ],
@@ -32,7 +32,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'opengl-registry = opengl_api_registry_reader.cli:execute_from_command_line',
+            'opengl-registry = opengl_registry.cli:execute_from_command_line',
         ],
     },
 )
