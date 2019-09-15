@@ -1,3 +1,5 @@
+import logging
+from io import StringIO
 from typing import List
 from xml.etree import ElementTree
 import requests
@@ -10,6 +12,8 @@ from opengl_api_registry_reader.group import Group
 from opengl_api_registry_reader.commands import Command
 from opengl_api_registry_reader.features import Feature
 from opengl_api_registry_reader.extensions import Extension
+
+logger = logging.getLogger(__name__)
 
 
 DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
@@ -63,17 +67,21 @@ class RegistryReader:
     @classmethod
     def from_file(cls, path: str) -> 'RegistryReader':
         """Create a RegistryReader with a local gl.xml file"""
+        logger.info("Reading registry file: '%s'", path)
         tree = ElementTree.parse(path)
         return cls(tree)
 
     @classmethod
     def from_url(cls, url: str = None) -> 'RegistryReader':
         """Create a RegistryReader with a url to the gl.xml file"""
-        response = requests.get(url or DEFAULT_URL)
+        url = url or DEFAULT_URL
+        logger.info("Reading registry file from url: '%s'", url)
+
+        response = requests.get(url)
         if response.status_code != requests.codes.ok:
             response.raise_for_error()
 
-        tree = ElementTree.fromstring(response.text)
+        tree = ElementTree.parse(StringIO(response.text))
         return cls(tree)
 
     def read(self) -> Registry:
@@ -176,17 +184,3 @@ class RegistryReader:
         """
         extensions = []
         return extensions
-
-
-if __name__ == '__main__':
-    reader = RegistryReader.from_local_file('gl.xml')
-    # reader = RegistryReader.from_url()
-    registry = reader.read()
-
-    # # Types
-    # for tp in registry.types:
-    #     print(tp)
-
-    # # Groups
-    # for _, grp in registry.groups.items():
-    #     print(type(grp), grp)

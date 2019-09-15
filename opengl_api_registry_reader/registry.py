@@ -1,7 +1,10 @@
 from typing import List
+import logging
 
 from opengl_api_registry_reader.gltype import GlType
 from opengl_api_registry_reader.group import Group
+
+logger = logging.getLogger(__name__)
 
 
 class Registry:
