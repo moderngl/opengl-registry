@@ -1,3 +1,4 @@
+[![pypi](https://badge.fury.io/py/opengl-registry.svg)](https://pypi.org/project/opengl-registry)
 
 # opengl-registry
 
