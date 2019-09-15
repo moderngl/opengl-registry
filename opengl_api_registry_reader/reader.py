@@ -1,13 +1,11 @@
 from xml.etree import ElementTree
 import requests
 
-from opengl_api_registry_reader.types import (
-    Enum,
-    Enums,
-    Group,
-    Registry,
-    Type,
-)
+from opengl_api_registry_reader.registry import Registry
+from opengl_api_registry_reader.gltype import GlType
+from opengl_api_registry_reader.enums import Enums, Enum
+from opengl_api_registry_reader.group import Group
+
 
 DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
 
@@ -34,7 +32,7 @@ class RegistryReader:
     #: The registry class. Can be replaced with a custom class
     registry_cls = Registry
     group_cls = Group
-    type_cls = Type
+    type_cls = GlType
     enums_cls = Enums
     enum_cls = Enum
 
