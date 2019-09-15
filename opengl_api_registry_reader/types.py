@@ -54,7 +54,7 @@ class Group:
 
         Args:
             name (str): Group name
-            entries (Set[str]): 
+            entries (Set[str]): A set of enums beloging to this group
         """
         self._name = name
         self._entries = entries
@@ -82,7 +82,7 @@ class Enums:
     def __init__(self, namespace: str = None, start: str = None, end: str = None,
                  vendor: str = None, comment: str = None):
         """Initialize an enum group.
-        
+
         This represents a reserved enum range normally reserved for a specific vendor.
 
         Keyword Args:
@@ -129,7 +129,6 @@ class Enums:
         """str: The vendor this enum block as assigned to (ARB, MESA, NV, AMD, QCOM etc.)"""
         return self._vendor
 
-
     @property
     def group(self) -> Group:
         """Group: The group this enum range belongs to"""
@@ -167,14 +166,14 @@ class Enum:
         self._value = value
         self._comment = comment
         self._range = None
-    
+
     @property
     def name(self) -> str:
         """str: Name of the enum"""
         return self._name
 
     @property
-    def comment(self)-> str:
+    def comment(self) -> str:
         """str: Enum comment"""
         return self._comment
 
