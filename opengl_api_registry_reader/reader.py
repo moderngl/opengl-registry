@@ -56,13 +56,6 @@ class RegistryReader:
         """
         self._tree = tree
         self._registry = self.registry_cls()
-        # Parser data
-        self._groups = []
-        self._types = []
-        self._enums = []
-        self._command = []
-        self._features = []
-        self._extensions = []
 
     @classmethod
     def from_file(cls, path: str) -> 'RegistryReader':
