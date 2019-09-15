@@ -1,10 +1,15 @@
+from typing import List
 from xml.etree import ElementTree
 import requests
 
+# NOTE: Consider moving this to __init__ when finalized
 from opengl_api_registry_reader.registry import Registry
 from opengl_api_registry_reader.gltype import GlType
 from opengl_api_registry_reader.enums import Enums, Enum
 from opengl_api_registry_reader.group import Group
+from opengl_api_registry_reader.commands import Command
+from opengl_api_registry_reader.features import Feature
+from opengl_api_registry_reader.extensions import Extension
 
 
 DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
@@ -56,10 +61,10 @@ class RegistryReader:
         self._extensions = []
 
     @classmethod
-    def from_local_file(cls, path: str) -> 'RegistryReader':
+    def from_file(cls, path: str) -> 'RegistryReader':
         """Create a RegistryReader with a local gl.xml file"""
         tree = ElementTree.parse(path)
-        return RegistryReader(tree)
+        return cls(tree)
 
     @classmethod
     def from_url(cls, url: str = None) -> 'RegistryReader':
@@ -69,27 +74,34 @@ class RegistryReader:
             response.raise_for_error()
 
         tree = ElementTree.fromstring(response.text)
-        return RegistryReader(tree)
+        return cls(tree)
 
-    def read(self):
+    def read(self) -> Registry:
         """Reads the registry structure.
 
         Returns:
             Registry: The ``Registry`` instance
         """
-        self.read_types()
-        self.read_groups()
-        self.read_enums()
-        self.read_commands()
-        self.read_features()
-        self.read_extensions()
+        self._types = self.read_types()
+        self._groups = self.read_groups()
+        self._enums = self.read_enums()
+        self._commands = self.read_commands()
+        self._features = self.read_features()
+        self._extensions = self.read_extensions()
+
         return self.registry_cls(
             types=self._types,
             groups=self._groups,
         )
 
-    def read_types(self):
-        """Read all GL type definitions"""
+    def read_types(self) -> List[GlType]:
+        """Read all GL type definitions
+
+        Returns:
+            List[GlType]: list of types
+        """
+        types = []
+
         for type_elem in self._tree.getroot().iter('type'):
             name = None
             try:
@@ -97,7 +109,7 @@ class RegistryReader:
             except StopIteration:
                 name = type_elem.get('name')
 
-            self._types.append(
+            types.append(
                 self.type_cls(
                     name=name,
                     text="".join(type_elem.itertext()),
@@ -106,29 +118,64 @@ class RegistryReader:
                 )
             )
 
-    def read_groups(self):
-        """Reads all group nodes"""
+        return types
+
+    def read_groups(self) -> List[Group]:
+        """Reads all group nodes.
+
+        Returns:
+            List[Group]: list of groups
+        """
+        groups = []
+
         for groups_elem in self._tree.getroot().iter('group'):
-            self._groups.append(
+            groups.append(
                 self.group_cls(
                     groups_elem.attrib['name'],
                     entries={e.attrib['name'] for e in groups_elem.iter('enum')},
                 )
             )
 
-    def read_enums(self):
-        """Reads all enums"""
+        return groups
+
+    def read_enums(self) -> List[Enums]:
+        """Reads all enums.
+
+        Returns:
+            List[Enums]: list of enum groups
+        """
+        enums = []
         for enums_elem in self._tree.getroot().iter('enums'):
-            print(enums_elem)
+            pass
 
-    def read_commands(self):
-        pass
+        return enums
 
-    def read_features(self):
-        pass
+    def read_commands(self) -> List[Command]:
+        """Reads all commands.
 
-    def read_extensions(self):
-        pass
+        Returns:
+            List[Command]: list of commands
+        """
+        commands = []
+        return commands
+
+    def read_features(self) -> List[Feature]:
+        """Reads all features.
+
+        Returns:
+            List[Feature]: list of features
+        """
+        features = []
+        return features
+
+    def read_extensions(self) -> List[Extension]:
+        """Reads all extensions.
+
+        Returns:
+            List[Extension]: list of extensions
+        """
+        extensions = []
+        return extensions
 
 
 if __name__ == '__main__':
