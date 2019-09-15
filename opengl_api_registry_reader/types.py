@@ -97,6 +97,7 @@ class Enums:
         self._end = end
         self._vendor = vendor
         self._comment = comment
+        self._group
 
     @property
     def namespace(self):
@@ -127,6 +128,16 @@ class Enums:
     def vendor(self) -> str:
         """str: The vendor this enum block as assigned to (ARB, MESA, NV, AMD, QCOM etc.)"""
         return self._vendor
+
+
+    @property
+    def group(self) -> Group:
+        """Group: The group this enum range belongs to"""
+        return self._group
+
+    @group.setter
+    def group(self, value: Group):
+        self._group = value
 
     @property
     def comment(self) -> str:
