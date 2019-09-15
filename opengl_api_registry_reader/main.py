@@ -2,6 +2,8 @@ from xml.etree import ElementTree
 import requests
 
 from opengl_api_registry_reader.types import (
+    Enum,
+    Enums,
     Group,
     Registry,
     Type,
@@ -14,7 +16,12 @@ class RegistryReader:
     """Reads ``gl.xml`` file into a ``Registry`` structure
     that can easily be inspected.
     """
+    #: The registry class. Can be replaced with a custom class
     registry_cls = Registry
+    group_cls = Group
+    type_cls = Type
+    enums_cls = Enums
+    enum_cls = Enum
 
     def __init__(self, tree: ElementTree):
         self._tree = tree
@@ -22,6 +29,10 @@ class RegistryReader:
         # Parser data
         self._groups = []
         self._types = []
+        self._enums = []
+        self._command = []
+        self._features = []
+        self._extensions = []
 
     @classmethod
     def from_local_file(cls, path: str) -> 'RegistryReader':
@@ -40,6 +51,11 @@ class RegistryReader:
         return RegistryReader(tree)
 
     def read(self):
+        """Reads the registry structure.
+
+        Returns:
+            Registry: The ``Registry`` instance
+        """
         self.read_types()
         self.read_groups()
         self.read_enums()
@@ -61,7 +77,7 @@ class RegistryReader:
                 name = type_elem.get('name')
 
             self._types.append(
-                Type(
+                self.type_cls(
                     name=name,
                     text="".join(type_elem.itertext()),
                     comment=type_elem.get('comment'),
@@ -73,14 +89,16 @@ class RegistryReader:
         """Reads all group nodes"""
         for groups_elem in self._tree.getroot().iter('group'):
             self._groups.append(
-                Group(
+                self.group_cls(
                     groups_elem.attrib['name'],
                     entries={e.attrib['name'] for e in groups_elem.iter('enum')},
                 )
             )
 
     def read_enums(self):
-        pass
+        """Reads all enums"""
+        for enums_elem in self._tree.getroot().iter('enums'):
+            print(enums_elem)
 
     def read_commands(self):
         pass
@@ -97,8 +115,10 @@ if __name__ == '__main__':
     # reader = RegistryReader.from_url()
     registry = reader.read()
 
-    for tp in registry.types:
-        print(tp)
+    # # Types
+    # for tp in registry.types:
+    #     print(tp)
 
+    # # Groups
     # for _, grp in registry.groups.items():
     #     print(type(grp), grp)
