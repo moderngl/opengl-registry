@@ -9,6 +9,26 @@ A simple tool for extracting information from the OpenGL API Registry.
 The registry is currently located on github in the KhronosGroup organization:
 https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml
 
+## Setting Up From Source
+
+Clone the repo and enter the project directory.
+We assume the user will set up a virtualenv.
+
+```
+pip install -e .
+```
+
+This will install the package in editable mode
+meaning you can keep changing the source without
+having to install it for every change.
+
+If you actually want to install the package and have
+no desire to modify its contents:
+
+```
+pip install .
+```
+
 ## Running Tests
 
 We use `tox` for running tests covering py3.4, py3.6 and py3.7 with flake9 and coverage.
@@ -32,12 +52,12 @@ pip install -r docs/requirements.txt
 python setup.py build_sphinx
 ```
 
-## Registry Info Details
+## Regsitry Info
 
-The registry is simply a huge xml file containing information about enums
-and functions.
-
-The skeleton structure
+The registry is simply a huge xml file usually named `gl.xml` containing
+information about enums and functions. These are then referenced in
+features (opengl/es versions) and extensions. This also includes
+required and removed enums and functions as the versions progress.
 
 ```xml
 <registry>
