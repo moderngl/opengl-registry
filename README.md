@@ -78,7 +78,8 @@ required and removed enums and functions as the versions progress.
         ...
     </groups>
 
-    <!-- Multiple enums blocks with the enum names and values. Can point to a group -->    <enums namespace="GL" group="ContextProfileMask" type="bitmask">
+    <!-- Multiple enums blocks with the enum names and values. Can point to a group -->
+    <enums namespace="GL" group="ContextProfileMask" type="bitmask">
         <enum value="0x00000001" name="GL_CONTEXT_CORE_PROFILE_BIT"/>
         <enum value="0x00000002" name="GL_CONTEXT_COMPATIBILITY_PROFILE_BIT"/>
     </enums>
