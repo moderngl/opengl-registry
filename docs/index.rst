@@ -6,10 +6,12 @@
 Welcome to opengl-api-registry-reader's documentation!
 ======================================================
 
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: API Referemce:
 
+   reference/reader
 
 
 Indices and tables
