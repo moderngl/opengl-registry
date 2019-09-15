@@ -1,6 +1,51 @@
 from typing import List, Set
 
 
+class Type:
+    """GL type definition"""
+
+    def __init__(self, name: str = None, text: str = None,
+                 comment: str = None, requires: str = None):
+        """Initialize a GL type.
+
+        Args:
+            name (str): Name of the type
+            text (str): text data
+            comment (str): Type comment
+            requires (str): References a type name
+        """
+        self._name = name
+        self._text = text
+        self._comment = comment
+        self._requires = requires
+
+    @property
+    def name(self) -> str:
+        """str: Name of the type"""
+        return self._name
+
+    @property
+    def text(self) -> str:
+        """str: text data"""
+        return self._text
+
+    @property
+    def comment(self) -> str:
+        """str: Type comment"""
+        return self._comment
+
+    @property
+    def requires(self) -> str:
+        """str: References a type name"""
+        return self._requires
+
+    def __str__(self):
+        return "<Type: {}>".format(self._name)
+
+    def __repr__(self):
+        return str(self)
+
+
 class Group:
     """Grouped enums"""
 
@@ -31,18 +76,28 @@ class Group:
         return "<Group name={} entires={}>".format(self._name, self._entries)
 
 
-
-
 class Registry:
+    """A collection of all registry information"""
 
-    def __init__(self, groups: List[Group] = None):
-        self._groups = dict()
+    def __init__(self, types: List[Type] = None, groups: List[Group] = None):
+        """Initialize the registry.
 
-        if groups:
-            self._groups = {grp.name: grp for grp in groups}
+        Args:
+            types: 
+            groups: 
+        """
+        self._groups = {grp.name: grp for grp in groups} if groups else dict()
+        self._types = types
 
     @property
     def groups(self) -> dict:
         return self._groups
 
+    @property
+    def types(self) -> List[Type]:
+        return self._types
 
+    # TODO: Finalize this method
+    def get_features(api='gl', profile='core', version='3.3', extensions=None):
+        """Generate a subset of the registry"""
+        raise NotImplementedError()

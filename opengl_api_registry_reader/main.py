@@ -4,6 +4,7 @@ import requests
 from opengl_api_registry_reader.types import (
     Group,
     Registry,
+    Type,
 )
 
 DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
@@ -20,6 +21,7 @@ class RegistryReader:
         self._registry = self.registry_cls()
         # Parser data
         self._groups = []
+        self._types = []
 
     @classmethod
     def from_local_file(cls, path: str) -> 'RegistryReader':
@@ -38,17 +40,37 @@ class RegistryReader:
         return RegistryReader(tree)
 
     def read(self):
+        self.read_types()
         self.read_groups()
         self.read_enums()
         self.read_commands()
         self.read_features()
         self.read_extensions()
         return self.registry_cls(
+            types=self._types,
             groups=self._groups,
         )
 
+    def read_types(self):
+        """Read all GL type definitions"""
+        for type_elem in self._tree.getroot().iter('type'):
+            name = None
+            try:
+                name = next(type_elem.iter('name')).text
+            except StopIteration:
+                name = type_elem.get('name')
+
+            self._types.append(
+                Type(
+                    name=name,
+                    text="".join(type_elem.itertext()),
+                    comment=type_elem.get('comment'),
+                    requires=type_elem.get('requires'),
+                )
+            )
+
     def read_groups(self):
-        """Reads all enum group info"""
+        """Reads all group nodes"""
         for groups_elem in self._tree.getroot().iter('group'):
             self._groups.append(
                 Group(
@@ -74,5 +96,9 @@ if __name__ == '__main__':
     reader = RegistryReader.from_local_file('gl.xml')
     # reader = RegistryReader.from_url()
     registry = reader.read()
-    for _, grp in registry.groups.items():
-        print(type(grp), grp)
+
+    for tp in registry.types:
+        print(tp)
+
+    # for _, grp in registry.groups.items():
+    #     print(type(grp), grp)

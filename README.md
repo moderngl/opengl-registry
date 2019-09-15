@@ -141,6 +141,4 @@ The skeleton structure
         </extension>
         ...
     </extension>
-
-
 </registry>
