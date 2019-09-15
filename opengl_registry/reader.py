@@ -15,7 +15,6 @@ from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
 
-
 DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
 
 
