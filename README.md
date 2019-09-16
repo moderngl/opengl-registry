@@ -9,7 +9,7 @@ will be removed once the first stable version is releated on PyPI**
 * [opengl-registry on PyPI](https://pypi.org/project/opengl-registry)
 * [opengl-registry on Github](https://github.com/moderngl/opengl-registry)
 
-A simple tool for extracting information from the OpenGL API Registry.
+A tool for extracting information from the OpenGL API Registry.
 
 The registry is currently located on github in the KhronosGroup organization:
 https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml
