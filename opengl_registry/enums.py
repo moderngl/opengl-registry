@@ -4,8 +4,8 @@ from opengl_registry.group import Group
 class Enums:
     """Group of enums in a range reserved for a vendor"""
 
-    def __init__(self, namespace: str = None, start: str = None, end: str = None,
-                 vendor: str = None, comment: str = None):
+    def __init__(self, namespace: str = None, start: str = None, end: str = None, vendor: str = None,
+                 comment: str = None, group: Group = None, group_name: str = None, type: str = None):
         """Initialize an enum group.
 
         This represents a reserved enum range normally reserved for a specific vendor.
@@ -16,13 +16,18 @@ class Enums:
             end (str): Range end as a hex string
             vendor (str): The vendor this enum block as assigned to (ARB, MESA, NV, AMD, QCOM etc.)
             comment (str): Enum range comment from the spec
+            group (Group): The ``Group`` this enum collection is related to
+            group_name (str): The group name
+            type (str): Enum type
         """
         self._namespace = namespace
         self._start = start
         self._end = end
         self._vendor = vendor
         self._comment = comment
-        self._group
+        self._group = group
+        self._group_name = group_name
+        self._type = type
 
     @property
     def namespace(self):
@@ -55,6 +60,10 @@ class Enums:
         return self._vendor
 
     @property
+    def group_name(self) -> str:
+        return self._group_name
+
+    @property
     def group(self) -> Group:
         """Group: The group this enum range belongs to"""
         return self._group
@@ -67,6 +76,11 @@ class Enums:
     def comment(self) -> str:
         """str: Enum range comment from the spec"""
         return self._comment
+
+    @property
+    def type(self):
+        """str: Enum type"""
+        return self._type
 
     def __str__(self) -> str:
         return "<Enums {} - {}>".format(self._start, self._end)

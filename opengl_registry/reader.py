@@ -39,9 +39,13 @@ class RegistryReader:
     """
     #: The registry class. Can be replaced with a custom class
     registry_cls = Registry
+    #: The Group class. Can be replaced with a custom class
     group_cls = Group
+    #: The GlType class. Can be replaced with a custom class
     type_cls = GlType
+    #: The Enums class. Can be replaced with a custom class
     enums_cls = Enums
+    #: The Enum class. Can be replaced with a custom class
     enum_cls = Enum
 
     def __init__(self, tree: ElementTree):
@@ -139,14 +143,23 @@ class RegistryReader:
         return groups
 
     def read_enums(self) -> List[Enums]:
-        """Reads all enums.
+        """Reads all enums groups.
 
         Returns:
-            List[Enums]: list of enum groups
+            List[Enums]: list of enums groups
         """
         enums = []
         for enums_elem in self._tree.getroot().iter('enums'):
-            pass
+            enums_instance = self.enums_cls(
+                namespace=enums_elem.get('namespace'),
+                group_name=enums_elem.get('group'),
+                type=enums_elem.get('type'),
+                comment=enums_elem.get('comment'),
+                vendor=enums_elem.get('vendor'),
+                start=enums_elem.get('start'),
+                end=enums_elem.get('end'),
+            )
+            enums.append(enums_instance)
 
         return enums
 
