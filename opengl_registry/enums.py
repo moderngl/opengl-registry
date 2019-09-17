@@ -1,3 +1,5 @@
+from typing import List
+
 from opengl_registry.group import Group
 
 
@@ -5,7 +7,8 @@ class Enums:
     """Group of enums in a range reserved for a vendor"""
 
     def __init__(self, namespace: str = None, start: str = None, end: str = None, vendor: str = None,
-                 comment: str = None, group: Group = None, group_name: str = None, type: str = None):
+                 comment: str = None, group: Group = None, group_name: str = None, type: str = None,
+                 entries: List['Entry'] = None):
         """Initialize an enum group.
 
         This represents a reserved enum range normally reserved for a specific vendor.
@@ -28,6 +31,7 @@ class Enums:
         self._group = group
         self._group_name = group_name
         self._type = type
+        self._entries = entries or []
 
     @property
     def namespace(self):
@@ -78,6 +82,10 @@ class Enums:
         return self._comment
 
     @property
+    def entires(self) -> List['Enum']:
+        return self._entries
+
+    @property
     def type(self):
         """str: Enum type"""
         return self._type
@@ -92,7 +100,7 @@ class Enums:
 class Enum:
     """Container for GL enum info"""
 
-    def __init__(self, name: str, value: str, comment=None):
+    def __init__(self, *, name: str, value: str, alias: str, comment=None):
         """Initialize an enum instance.
 
         Args:
