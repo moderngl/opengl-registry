@@ -3,6 +3,10 @@ import logging
 
 from opengl_registry.gltype import GlType
 from opengl_registry.group import Group
+from opengl_registry.enums import Enums
+from opengl_registry.commands import Command
+from opengl_registry.features import Feature
+from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +14,14 @@ logger = logging.getLogger(__name__)
 class Registry:
     """A collection of all registry information"""
 
-    def __init__(self, types: List[GlType] = None, groups: List[Group] = None):
+    def __init__(self,
+                 *,
+                 types: List[GlType],
+                 groups: List[Group],
+                 enums: List[Enums],
+                 commands: List[Command],
+                 features: List[Feature],
+                 extensions:  List[Extension]):
         """Initialize the registry.
 
         Keyword Args:

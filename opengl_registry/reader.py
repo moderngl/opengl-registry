@@ -58,7 +58,6 @@ class RegistryReader:
             tree (ElementTree): The `ElementTree` instance
         """
         self._tree = tree
-        self._registry = self.registry_cls()
 
     @classmethod
     def from_file(cls, path: str) -> 'RegistryReader':
@@ -86,16 +85,13 @@ class RegistryReader:
         Returns:
             Registry: The ``Registry`` instance
         """
-        self._types = self.read_types()
-        self._groups = self.read_groups()
-        self._enums = self.read_enums()
-        self._commands = self.read_commands()
-        self._features = self.read_features()
-        self._extensions = self.read_extensions()
-
         return self.registry_cls(
-            types=self._types,
-            groups=self._groups,
+            types=self.read_types(),
+            groups=self.read_groups(),
+            enums=self.read_enums(),
+            commands=self.read_commands(),
+            features=self.read_features(),
+            extensions=self.read_extensions(),
         )
 
     def read_types(self) -> List[GlType]:
@@ -158,6 +154,15 @@ class RegistryReader:
                 vendor=enums_elem.get('vendor'),
                 start=enums_elem.get('start'),
                 end=enums_elem.get('end'),
+                entries=[
+                    Enum(
+                        name=el.get('name'),
+                        value=el.get('value'),
+                        comment=el.get('comment'),
+                        alias=el.get('alias'),
+                    )
+                    for el in enums_elem.iter('enum')
+                ]
             )
             enums.append(enums_instance)
 
