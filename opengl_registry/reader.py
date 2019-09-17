@@ -15,7 +15,6 @@ from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
 
 
 class RegistryReader:
@@ -37,6 +36,9 @@ class RegistryReader:
         reader = RegistryReader.from_url()
         registry = reader.read()
     """
+    #: The default URL for the ``gl.xml``` file
+    DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
+
     #: The registry class. Can be replaced with a custom class
     registry_cls = Registry
     #: The Group class. Can be replaced with a custom class
@@ -69,7 +71,7 @@ class RegistryReader:
     @classmethod
     def from_url(cls, url: str = None) -> 'RegistryReader':
         """Create a RegistryReader with a url to the gl.xml file"""
-        url = url or DEFAULT_URL
+        url = url or cls.DEFAULT_URL
         logger.info("Reading registry file from url: '%s'", url)
 
         response = requests.get(url)
