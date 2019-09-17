@@ -21,7 +21,7 @@ class Registry:
                  enums: List[Enums],
                  commands: List[Command],
                  features: List[Feature],
-                 extensions:  List[Extension]):
+                 extensions: List[Extension]):
         """Initialize the registry.
 
         Keyword Args:

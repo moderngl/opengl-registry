@@ -16,7 +16,6 @@ from opengl_registry.extensions import Extension
 logger = logging.getLogger(__name__)
 
 
-
 class RegistryReader:
     """Reads ``gl.xml`` file into a ``Registry`` structure
     that can easily be inspected.

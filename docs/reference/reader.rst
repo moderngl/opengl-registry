@@ -25,6 +25,7 @@ Methods
 Attributes
 ----------
 
+.. autoattribute:: RegistryReader.DEFAULT_URL
 .. autoattribute:: RegistryReader.registry_cls
 .. autoattribute:: RegistryReader.group_cls
 .. autoattribute:: RegistryReader.enums_cls
