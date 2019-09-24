@@ -57,7 +57,7 @@ pip install -r docs/requirements.txt
 python setup.py build_sphinx
 ```
 
-## Regsitry Info
+## Registry Info
 
 The registry is simply a huge xml file usually named `gl.xml` containing
 information about enums and functions. These are then referenced in
