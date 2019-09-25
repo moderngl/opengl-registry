@@ -82,6 +82,11 @@ class Command:
     def glx(self, value):
         self._glx = value
 
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return "<Command {} {}".format(self._name, [p.name for p in self._params])
 
 class Commands:
     """A group of commands"""

@@ -9,7 +9,7 @@ from opengl_registry.registry import Registry
 from opengl_registry.gltype import GlType
 from opengl_registry.enums import Enums, Enum
 from opengl_registry.group import Group
-from opengl_registry.commands import Command
+from opengl_registry.commands import Command, CommandParam, Commands
 from opengl_registry.features import Feature
 from opengl_registry.extensions import Extension
 
@@ -175,7 +175,48 @@ class RegistryReader:
         Returns:
             List[Command]: list of commands
         """
-        commands = []
+        entries = []
+        commands_elem = next(self._tree.getroot().iter('commands'))
+        commands = Commands(
+            namespace=commands_elem.get('namespace'),
+            entires=entries,
+        )
+        for comm_elem in commands_elem.iter('command'):
+            command = Command()
+            entries.append(command)
+
+            for child in comm_elem:
+                # A command should only have one proto tag
+                if child.tag == 'proto':
+                    command.proto = "".join(child.itertext())
+                    command.name = next(child.iter('name')).text
+                elif child.tag == 'param':
+                    name = next(child.iter('name')).text
+                    value = "".join(child.itertext())
+                    group = child.get('group')
+                    length = child.get('len')
+                    ptype = None
+                    try:
+                        ptype = next(child.iter('ptype')).text
+                    except StopIteration:
+                        pass
+                    command.params.append(
+                        CommandParam(
+                            name=name,
+                            value=value,
+                            ptype=ptype,
+                            group=group,
+                            length=length,
+                        )
+                    )
+                elif child.tag == 'glx':
+                    command.glx = {
+                        'type': child.get('type'),
+                        'opcode': child.get('opcode'),
+                        'name': child.get('name'),
+                        'comment': child.get('comment'),
+                    }
+
         return commands
 
     def read_features(self) -> List[Feature]:
