@@ -88,6 +88,7 @@ class Command:
     def __str__(self):
         return "<Command {} {}".format(self._name, [p.name for p in self._params])
 
+
 class Commands:
     """A group of commands"""
 
