@@ -3,12 +3,12 @@ from typing import List
 
 class FeatureDetails:
     """May represent addition or removal"""
-    REQUIRE = 0
-    REMOVE = 1
+    REQUIRE = 'require'
+    REMOVE = 'remove'
 
     def __init__(self, mode: int, profile: str = None, comment: str = None,
-                 enums: List[str] = None, commands: List[str] = None):
-        """Intialize feature details.
+                 enums: List[str] = None, commands: List[str] = None, types: List[str] = None):
+        """Initialize feature details.
         This is simply a group of enum and command names
         a feature wants to add or remove from this the
         specific version.
@@ -20,12 +20,19 @@ class FeatureDetails:
             comment (str): Comment about this addition/removal
             enums: (List[str]) of enums names
             commands (List[str]): List of commands names
+            types (List[str]): List of type names
         """
-
+        self._mode = mode
         self._profile = profile
         self._comment = comment
-        self._enums = []
-        self._commands = []
+        self._enums = enums or []
+        self._commands = commands or []
+        self._types = types or []
+
+    @property
+    def mode(self):
+        """FeatureDetails.REQUIRE or REMOVE"""
+        return self._mode
 
     @property
     def profile(self) -> str:
@@ -47,6 +54,19 @@ class FeatureDetails:
         """List[str]: list of command names"""
         return self._commands
 
+    @property
+    def types(self):
+        """List[str]: list of types"""
+        return self._types
+
+    def __str__(self):
+        return "<FeatureDetails {} profile={} enums={} commands={} types={}>".format(
+            self._mode, self._profile, self._enums, self._commands, self._types,
+        )
+
+    def __repr__(self):
+        return str(self)
+
 
 class Feature:
 
@@ -54,8 +74,8 @@ class Feature:
         self._api = api
         self._name = name
         self._number = number
-        self.require = []
-        self.remove = []
+        self._require = []
+        self._remove = []
 
     @property
     def api(self) -> str:
@@ -81,3 +101,9 @@ class Feature:
     def remove(self) -> List[FeatureDetails]:
         """List[FeatureDetails]: list of commands and enums for removal"""
         return self._remove
+
+    def __str__(self):
+        return "<Feature {} {} {}>".format(self._api, self._number, self._name)
+
+    def __repr__(self):
+        return str(self)

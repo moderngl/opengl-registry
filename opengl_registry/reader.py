@@ -10,7 +10,7 @@ from opengl_registry.gltype import GlType
 from opengl_registry.enums import Enums, Enum
 from opengl_registry.group import Group
 from opengl_registry.commands import Command, CommandParam, Commands
-from opengl_registry.features import Feature
+from opengl_registry.features import Feature, FeatureDetails
 from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ class RegistryReader:
         reader = RegistryReader.from_file('gl.xml')
         registry = reader.read()
 
-        # From url. If no url paramter is passed in the last known url for this file is used.
+        # From url. If no url parameter is passed in the last known url for this file is used.
         # Currently it resides on github in the KhronosGroup organization
         reader = RegistryReader.from_url()
         registry = reader.read()
@@ -226,6 +226,30 @@ class RegistryReader:
             List[Feature]: list of features
         """
         features = []
+        for feature_elem in self._tree.iter('feature'):
+            feature = Feature(
+                api=feature_elem.get('api'),
+                name=feature_elem.get('name'),
+                number=feature_elem.get('number'),
+            )
+            features.append(Feature)
+            for details_elem in (*feature_elem.iter('require'), *feature_elem.iter('remove')):
+                mode = details_elem.tag
+                details = FeatureDetails(
+                    mode,
+                    profile=details_elem.get('profile'),
+                    comment=details_elem.get('comment'),
+                    enums=[t.get('name') for t in details_elem.iter('enum')],
+                    commands=[t.get('name') for t in details_elem.iter('command')],
+                    types=[t.get('name') for t in details_elem.iter('type')],
+                )
+                if mode == FeatureDetails.REQUIRE:
+                    feature.require.append(details)
+                elif mode == FeatureDetails.REMOVE:
+                    feature.require.append(details)
+                else:
+                    logger.warning("Unsupported mode: '%s'", mode)
+
         return features
 
     def read_extensions(self) -> List[Extension]:
