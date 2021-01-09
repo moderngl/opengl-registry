@@ -6,10 +6,19 @@ from opengl_registry.group import Group
 class Enums:
     """Group of enums in a range reserved for a vendor"""
 
-    def __init__(self, *, namespace: str,  group: Group = None, type: str,
-                 start: str = None, end: str = None, vendor: str = None,
-                 comment: str = None, group_name: str = None,
-                 entries: List["Enum"] = None):
+    def __init__(
+        self,
+        *,
+        namespace: str,
+        group: Group = None,
+        type: str,
+        start: str = None,
+        end: str = None,
+        vendor: str = None,
+        comment: str = None,
+        group_name: str = None,
+        entries: List["Enum"] = None
+    ):
         """Initialize an enum group.
 
         This represents a reserved enum range normally reserved for a specific vendor.
@@ -78,7 +87,7 @@ class Enums:
         return self._comment
 
     @property
-    def entires(self) -> List['Enum']:
+    def entires(self) -> List["Enum"]:
         return self._entries
 
     def __str__(self) -> str:

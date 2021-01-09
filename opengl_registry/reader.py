@@ -11,6 +11,7 @@ from opengl_registry.enums import Enums, Enum
 from opengl_registry.group import Group
 from opengl_registry.commands import Command, CommandParam, Commands
 from opengl_registry.features import Feature, FeatureDetails
+
 # from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
@@ -35,8 +36,9 @@ class RegistryReader:
         reader = RegistryReader.from_url()
         registry = reader.read()
     """
+
     #: The default URL for the ``gl.xml``` file
-    DEFAULT_URL = 'https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml'
+    DEFAULT_URL = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
 
     #: The registry class. Can be replaced with a custom class
     registry_cls = Registry
@@ -61,14 +63,14 @@ class RegistryReader:
         self._tree = tree
 
     @classmethod
-    def from_file(cls, path: str) -> 'RegistryReader':
+    def from_file(cls, path: str) -> "RegistryReader":
         """Create a RegistryReader with a local gl.xml file"""
         logger.info("Reading registry file: '%s'", path)
         tree = ElementTree.parse(path)
         return cls(tree)
 
     @classmethod
-    def from_url(cls, url: str = None) -> 'RegistryReader':
+    def from_url(cls, url: str = None) -> "RegistryReader":
         """Create a RegistryReader with a url to the gl.xml file"""
         url = url or cls.DEFAULT_URL
         logger.info("Reading registry file from url: '%s'", url)
@@ -103,19 +105,19 @@ class RegistryReader:
         """
         types = []
 
-        for type_elem in self._tree.getroot().iter('type'):
+        for type_elem in self._tree.getroot().iter("type"):
             name = None
             try:
-                name = next(type_elem.iter('name')).text
+                name = next(type_elem.iter("name")).text
             except StopIteration:
-                name = type_elem.get('name')
+                name = type_elem.get("name")
 
             types.append(
                 self.type_cls(
                     name=name,
                     text="".join(type_elem.itertext()),
-                    comment=type_elem.get('comment'),
-                    requires=type_elem.get('requires'),
+                    comment=type_elem.get("comment"),
+                    requires=type_elem.get("requires"),
                 )
             )
 
@@ -129,11 +131,11 @@ class RegistryReader:
         """
         groups = []
 
-        for groups_elem in self._tree.getroot().iter('group'):
+        for groups_elem in self._tree.getroot().iter("group"):
             groups.append(
                 self.group_cls(
-                    groups_elem.attrib['name'],
-                    entries={e.attrib['name'] for e in groups_elem.iter('enum')},
+                    groups_elem.attrib["name"],
+                    entries={e.attrib["name"] for e in groups_elem.iter("enum")},
                 )
             )
 
@@ -146,24 +148,24 @@ class RegistryReader:
             List[Enums]: list of enums groups
         """
         enums = []
-        for enums_elem in self._tree.getroot().iter('enums'):
+        for enums_elem in self._tree.getroot().iter("enums"):
             enums_instance = self.enums_cls(
-                namespace=enums_elem.get('namespace'),
-                group_name=enums_elem.get('group'),
-                type=enums_elem.get('type'),
-                comment=enums_elem.get('comment'),
-                vendor=enums_elem.get('vendor'),
-                start=enums_elem.get('start'),
-                end=enums_elem.get('end'),
+                namespace=enums_elem.get("namespace"),
+                group_name=enums_elem.get("group"),
+                type=enums_elem.get("type"),
+                comment=enums_elem.get("comment"),
+                vendor=enums_elem.get("vendor"),
+                start=enums_elem.get("start"),
+                end=enums_elem.get("end"),
                 entries=[
                     Enum(
-                        name=el.get('name'),
-                        value=el.get('value'),
-                        comment=el.get('comment'),
-                        alias=el.get('alias'),
+                        name=el.get("name"),
+                        value=el.get("value"),
+                        comment=el.get("comment"),
+                        alias=el.get("alias"),
                     )
-                    for el in enums_elem.iter('enum')
-                ]
+                    for el in enums_elem.iter("enum")
+                ],
             )
             enums.append(enums_instance)
 
@@ -176,28 +178,28 @@ class RegistryReader:
             List[Command]: list of commands
         """
         entries = []
-        commands_elem = next(self._tree.getroot().iter('commands'))
+        commands_elem = next(self._tree.getroot().iter("commands"))
         commands = Commands(
-            namespace=commands_elem.get('namespace'),
+            namespace=commands_elem.get("namespace"),
             entires=entries,
         )
-        for comm_elem in commands_elem.iter('command'):
+        for comm_elem in commands_elem.iter("command"):
             command = Command()
             entries.append(command)
 
             for child in comm_elem:
                 # A command should only have one proto tag
-                if child.tag == 'proto':
+                if child.tag == "proto":
                     command.proto = "".join(child.itertext())
-                    command.name = next(child.iter('name')).text
-                elif child.tag == 'param':
-                    name = next(child.iter('name')).text
+                    command.name = next(child.iter("name")).text
+                elif child.tag == "param":
+                    name = next(child.iter("name")).text
                     value = "".join(child.itertext())
-                    group = child.get('group')
-                    length = child.get('len')
+                    group = child.get("group")
+                    length = child.get("len")
                     ptype = None
                     try:
-                        ptype = next(child.iter('ptype')).text
+                        ptype = next(child.iter("ptype")).text
                     except StopIteration:
                         pass
                     command.params.append(
@@ -209,12 +211,12 @@ class RegistryReader:
                             length=length,
                         )
                     )
-                elif child.tag == 'glx':
+                elif child.tag == "glx":
                     command.glx = {
-                        'type': child.get('type'),
-                        'opcode': child.get('opcode'),
-                        'name': child.get('name'),
-                        'comment': child.get('comment'),
+                        "type": child.get("type"),
+                        "opcode": child.get("opcode"),
+                        "name": child.get("name"),
+                        "comment": child.get("comment"),
                     }
 
         return commands
@@ -226,22 +228,25 @@ class RegistryReader:
             List[Feature]: list of features
         """
         features = []
-        for feature_elem in self._tree.iter('feature'):
+        for feature_elem in self._tree.iter("feature"):
             feature = Feature(
-                api=feature_elem.get('api'),
-                name=feature_elem.get('name'),
-                number=feature_elem.get('number'),
+                api=feature_elem.get("api"),
+                name=feature_elem.get("name"),
+                number=feature_elem.get("number"),
             )
             features.append(Feature)
-            for details_elem in (*feature_elem.iter('require'), *feature_elem.iter('remove')):
+            for details_elem in (
+                *feature_elem.iter("require"),
+                *feature_elem.iter("remove"),
+            ):
                 mode = details_elem.tag
                 details = FeatureDetails(
                     mode,
-                    profile=details_elem.get('profile'),
-                    comment=details_elem.get('comment'),
-                    enums=[t.get('name') for t in details_elem.iter('enum')],
-                    commands=[t.get('name') for t in details_elem.iter('command')],
-                    types=[t.get('name') for t in details_elem.iter('type')],
+                    profile=details_elem.get("profile"),
+                    comment=details_elem.get("comment"),
+                    enums=[t.get("name") for t in details_elem.iter("enum")],
+                    commands=[t.get("name") for t in details_elem.iter("command")],
+                    types=[t.get("name") for t in details_elem.iter("type")],
                 )
                 if mode == FeatureDetails.REQUIRE:
                     feature.require.append(details)

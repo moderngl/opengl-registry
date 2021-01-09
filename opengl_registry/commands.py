@@ -4,7 +4,9 @@ from typing import List
 class CommandParam:
     """Command parameter"""
 
-    def __init__(self, name=None, value=None, ptype=None, group=None, length=None, alias=None):
+    def __init__(
+        self, name=None, value=None, ptype=None, group=None, length=None, alias=None
+    ):
         self._name = name
         self._value = value
         self._ptype = ptype
@@ -92,7 +94,7 @@ class Command:
 class Commands:
     """A group of commands"""
 
-    def __init__(self, namespace='GL', entires=None):
+    def __init__(self, namespace="GL", entires=None):
         self._namespace = namespace
         self._entries = entires or []
 

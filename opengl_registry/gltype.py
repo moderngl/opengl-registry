@@ -1,10 +1,12 @@
 from typing import Optional
 
+
 class GlType:
     """GL type definition"""
 
-    def __init__(self, *, name: str, text: str = None,
-                 comment: str = None, requires: str = None):
+    def __init__(
+        self, *, name: str, text: str = None, comment: str = None, requires: str = None
+    ):
         """Initialize a GL type.
 
         Keyword Args:

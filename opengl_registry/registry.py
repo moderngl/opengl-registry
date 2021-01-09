@@ -14,14 +14,16 @@ logger = logging.getLogger(__name__)
 class Registry:
     """A collection of all registry information"""
 
-    def __init__(self,
-                 *,
-                 types: List[GlType],
-                 groups: List[Group],
-                 enums: List[Enums],
-                 commands: List[Command],
-                 features: List[Feature],
-                 extensions: List[Extension]):
+    def __init__(
+        self,
+        *,
+        types: List[GlType],
+        groups: List[Group],
+        enums: List[Enums],
+        commands: List[Command],
+        features: List[Feature],
+        extensions: List[Extension]
+    ):
         """Initialize the registry.
 
         Keyword Args:
@@ -43,7 +45,7 @@ class Registry:
     @property
     def enums(self) -> List[Enums]:
         return self._enums
-    
+
     @property
     def commands(self) -> List[Command]:
         return self._commands
@@ -62,8 +64,8 @@ class Registry:
         return self._types
 
     # TODO: Finalize this method
-    def get_profile(api: str = 'gl', profile: str = 'core', version: str = '3.3', extensions=None):
-        """
-        
-        """
+    def get_profile(
+        api: str = "gl", profile: str = "core", version: str = "3.3", extensions=None
+    ):
+        """"""
         raise NotImplementedError()

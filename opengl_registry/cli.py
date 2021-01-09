@@ -8,10 +8,7 @@ from opengl_registry.reader import RegistryReader
 
 
 def execute_from_command_line():
-    """Command line entrypoints.
-
-
-    """
+    """Command line entrypoints."""
     values = parse_args(sys.argv[1:])
     if values is None:
         return
@@ -27,7 +24,7 @@ def execute_from_command_line():
         reader = RegistryReader.from_url()
 
     registry = reader.read()
-    print('Registry:', registry)
+    print("Registry:", registry)
 
 
 def parse_args(args: List[str]):
@@ -38,23 +35,27 @@ def parse_args(args: List[str]):
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--file', '-f',
+        "--file",
+        "-f",
         help="Path to",
     )
     parser.add_argument(
-        '--url', '-u',
+        "--url",
+        "-u",
         help="Url location for the gl.xml file",
     )
     parser.add_argument(
-        '--default-url', '-d',
+        "--default-url",
+        "-d",
         action="store_true",
         help="Read the registry from the default url",
     )
     parser.add_argument(
-        '--log-level', '-l',
+        "--log-level",
+        "-l",
         help="Set the log level",
-        choices=['INFO', 'DEBUG', 'WARNING', 'ERROR'],
-        default='INFO',
+        choices=["INFO", "DEBUG", "WARNING", "ERROR"],
+        default="INFO",
     )
 
     values = parser.parse_args(args)
@@ -67,9 +68,11 @@ def parse_args(args: List[str]):
 
 
 def configure_logging(level):
-    pkg_logger = logging.getLogger('opengl_registry')
+    pkg_logger = logging.getLogger("opengl_registry")
     pkg_logger.setLevel(level)
     ch = logging.StreamHandler()
     ch.setLevel(level)
-    ch.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    ch.setFormatter(
+        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    )
     pkg_logger.addHandler(ch)

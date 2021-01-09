@@ -3,11 +3,19 @@ from typing import List, Optional
 
 class FeatureDetails:
     """May represent addition or removal"""
-    REQUIRE = 'require'
-    REMOVE = 'remove'
 
-    def __init__(self, mode: int, profile: str = None, comment: str = None,
-                 enums: List[str] = None, commands: List[str] = None, types: List[str] = None):
+    REQUIRE = "require"
+    REMOVE = "remove"
+
+    def __init__(
+        self,
+        mode: int,
+        profile: str = None,
+        comment: str = None,
+        enums: List[str] = None,
+        commands: List[str] = None,
+        types: List[str] = None,
+    ):
         """Initialize feature details.
         This is simply a group of enum and command names
         a feature wants to add or remove from this the
@@ -35,7 +43,7 @@ class FeatureDetails:
         return self._mode
 
     @property
-    def profile(self) ->  Optional[str]:
+    def profile(self) -> Optional[str]:
         """str: the profile needed. Usually core or compatibility"""
         return self._profile
 
@@ -61,7 +69,11 @@ class FeatureDetails:
 
     def __str__(self):
         return "<FeatureDetails {} profile={} enums={} commands={} types={}>".format(
-            self._mode, self._profile, self._enums, self._commands, self._types,
+            self._mode,
+            self._profile,
+            self._enums,
+            self._commands,
+            self._types,
         )
 
     def __repr__(self):
@@ -69,7 +81,6 @@ class FeatureDetails:
 
 
 class Feature:
-
     def __init__(self, *, api: str, name: str, number: str):
         self._api = api
         self._name = name
