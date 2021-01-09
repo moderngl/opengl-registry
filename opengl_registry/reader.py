@@ -11,7 +11,7 @@ from opengl_registry.enums import Enums, Enum
 from opengl_registry.group import Group
 from opengl_registry.commands import Command, CommandParam, Commands
 from opengl_registry.features import Feature, FeatureDetails
-from opengl_registry.extensions import Extension
+# from opengl_registry.extensions import Extension
 
 logger = logging.getLogger(__name__)
 
@@ -252,11 +252,10 @@ class RegistryReader:
 
         return features
 
-    def read_extensions(self) -> List[Extension]:
+    def read_extensions(self):
         """Reads all extensions.
 
         Returns:
             List[Extension]: list of extensions
         """
-        extensions = []
-        return extensions
+        return []

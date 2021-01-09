@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 
 class FeatureDetails:
@@ -30,17 +30,17 @@ class FeatureDetails:
         self._types = types or []
 
     @property
-    def mode(self):
+    def mode(self) -> int:
         """FeatureDetails.REQUIRE or REMOVE"""
         return self._mode
 
     @property
-    def profile(self) -> str:
+    def profile(self) ->  Optional[str]:
         """str: the profile needed. Usually core or compatibility"""
         return self._profile
 
     @property
-    def comment(self) -> str:
+    def comment(self) -> Optional[str]:
         """str: a comment"""
         return self._comment
 
@@ -70,12 +70,12 @@ class FeatureDetails:
 
 class Feature:
 
-    def __init__(self, api: str = None, name: str = None, number: str = None):
+    def __init__(self, *, api: str, name: str, number: str):
         self._api = api
         self._name = name
         self._number = number
-        self._require = []
-        self._remove = []
+        self._require: List[FeatureDetails] = []
+        self._remove: List[FeatureDetails] = []
 
     @property
     def api(self) -> str:

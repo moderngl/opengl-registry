@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from opengl_registry.group import Group
 
@@ -6,9 +6,10 @@ from opengl_registry.group import Group
 class Enums:
     """Group of enums in a range reserved for a vendor"""
 
-    def __init__(self, namespace: str = None, start: str = None, end: str = None, vendor: str = None,
-                 comment: str = None, group: Group = None, group_name: str = None, type: str = None,
-                 entries: List['Entry'] = None):
+    def __init__(self, *, namespace: str,  group: Group = None, type: str,
+                 start: str = None, end: str = None, vendor: str = None,
+                 comment: str = None, group_name: str = None,
+                 entries: List["Enum"] = None):
         """Initialize an enum group.
 
         This represents a reserved enum range normally reserved for a specific vendor.
@@ -34,43 +35,38 @@ class Enums:
         self._entries = entries or []
 
     @property
-    def namespace(self):
+    def namespace(self) -> str:
         """str: Namespace for the range (Usually always ``GL``)"""
         return self._namespace
 
     @property
-    def start(self) -> str:
+    def group(self) -> Optional[Group]:
+        """Group: The group this enum range belongs to"""
+        return self._group
+
+    @property
+    def type(self) -> str:
+        """str: Enum type"""
+        return self._type
+
+    @property
+    def start(self) -> Optional[str]:
         """str: Range start as a hex string"""
         return self._start
 
     @property
-    def start_int(self) -> int:
-        """str: Range start as an int"""
-        return int(self._start, base=16)
-
-    @property
-    def end(self) -> str:
+    def end(self) -> Optional[str]:
         """str: Range end as a hex string"""
         return self._end
 
     @property
-    def end_int(self) -> int:
-        """str: Range end as an int"""
-        return int(self._end, base=16)
-
-    @property
-    def vendor(self) -> str:
+    def vendor(self) -> Optional[str]:
         """str: The vendor this enum block as assigned to (ARB, MESA, NV, AMD, QCOM etc.)"""
         return self._vendor
 
     @property
     def group_name(self) -> str:
         return self._group_name
-
-    @property
-    def group(self) -> Group:
-        """Group: The group this enum range belongs to"""
-        return self._group
 
     @group.setter
     def group(self, value: Group):
@@ -84,11 +80,6 @@ class Enums:
     @property
     def entires(self) -> List['Enum']:
         return self._entries
-
-    @property
-    def type(self):
-        """str: Enum type"""
-        return self._type
 
     def __str__(self) -> str:
         return "<Enums {} - {}>".format(self._start, self._end)

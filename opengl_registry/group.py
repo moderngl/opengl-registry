@@ -22,7 +22,7 @@ class Group:
     @property
     def entires(self) -> Set[str]:
         """Set[str]: All enum entires in the group"""
-        return self._entires
+        return self._entries
 
     def __repr__(self) -> str:
         return str(self)
