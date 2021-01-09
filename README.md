@@ -44,9 +44,10 @@ pip install -r tests/requirements.txt
 tox
 
 # Specific environments
-tox -e py35
 tox -e py36
 tox -e py37
+tox -e py38
+tox -e py39
 tox -e pep8
 ```
 
